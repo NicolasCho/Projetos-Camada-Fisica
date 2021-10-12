@@ -1,0 +1,9 @@
+LICENSE.txt
+README.md
+crc.py
+setup.py
+crc.egg-info/PKG-INFO
+crc.egg-info/SOURCES.txt
+crc.egg-info/dependency_links.txt
+crc.egg-info/entry_points.txt
+crc.egg-info/top_level.txt

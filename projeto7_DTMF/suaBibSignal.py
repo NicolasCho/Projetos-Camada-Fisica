@@ -11,9 +11,6 @@ class signalMeu:
     def __init__(self):
         self.init = 0
 
-    def __init__(self):
-        self.init = 0
-
     def generateSin(self, freq, amplitude, time, fs):
         n = time*fs
         x = np.linspace(0.0, time, n)
@@ -22,6 +19,7 @@ class signalMeu:
 
     def calcFFT(self, signal, fs):
         # https://docs.scipy.org/doc/scipy/reference/tutorial/fftpack.html
+        #print(signal)
         N  = len(signal)
         W = window.hamming(N)
         T  = 1/fs
@@ -36,12 +34,17 @@ class signalMeu:
         plt.title('Fourier')
         plt.show()
     
-    def plotSin(self, tecla, signal, fs, time):
-        n = time*fs
-        x = np.linspace(0.0, time, n)
+    def plotSin(self,x,tecla, signal):
         plt.plot(x[:700], signal[:700])
         plt.title("Senoide da tecla {}".format(tecla))
         plt.xlabel("Tempo")
         plt.ylabel("Amplitude")
         plt.show()
 
+    def plotAudio(self, audio, amostras, time):
+        x = np.linspace(0.0, time, amostras)
+        plt.plot(x, audio)
+        plt.title("Gráfico do áudio captado")
+        plt.xlabel("Tempo")
+        plt.ylabel("Amplitude")
+        plt.show()

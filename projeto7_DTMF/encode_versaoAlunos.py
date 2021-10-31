@@ -1,16 +1,15 @@
-
-
 #importe as bibliotecas
+import numpy as np
+import sys
+import sounddevice as sd
 from suaBibSignal import signalMeu
 import matplotlib.pyplot as plt
-import sounddevice as sd
-import sys
-import numpy as np
+import peakutils
 
 
 def signal_handler(signal, frame):
-        print('You pressed Ctrl+C!')
-        sys.exit(0)
+    print('You pressed Ctrl+C!')
+    sys.exit(0)
 
 #converte intensidade em Db, caso queiram ...
 def todB(s):
@@ -29,25 +28,15 @@ def main():
     signal = signalMeu()
     fs = 44100
     amp = 1
-
     
-    #voce importou a bilioteca sounddevice como, por exemplo, sd. entao
-    # os seguintes parametros devem ser setados:
-    
-    
-    duration = 3  #tempo em segundos que ira emitir o sinal acustico 
-      
-#relativo ao volume. Um ganho alto pode saturar sua placa... comece com .3    
+    #VALORES ACIMA DE 1 GERAM PICOS BEM MAIORES DO QUE O ESPERADO (VERIFICAR!!)
+    duration = 10  #tempo em segundos que ira emitir o sinal acustico 
+         
     gainX  = 0.3
     gainY  = 0.3
 
 
     print("Gerando Tons base")
-    
-    #gere duas senoides para cada frequencia da tabela DTMF ! Canal x e canal y 
-    #use para isso sua biblioteca (cedida)
-    #obtenha o vetor tempo tb.
-    #deixe tudo como array
 
     freqs = {}
     freqs[0] = [941, 1336]
@@ -61,8 +50,6 @@ def main():
     freqs[8] = [852, 1336]
     freqs[9] = [852, 1477]
 
-    #printe a mensagem para o usuario teclar um numero de 0 a 9. 
-    #nao aceite outro valor de entrada.
     while True:    
         try:
             numero = int(input("Gerando Tom referente ao símbolo: "))
@@ -74,18 +61,26 @@ def main():
             else:
                 break
     
-    #construa o sunal a ser reproduzido. nao se esqueca de que é a soma das senoides
     freq1 = freqs[numero][0]
     freq2 = freqs[numero][1]
 
-    senoide1 = signal.generateSin(freq1, amp, duration, fs)[1]
-    senoide2 = signal.generateSin(freq2, amp, duration, fs)[1]
+    x1,senoide1 = signal.generateSin(freq1, amp, duration, fs)
+    x2,senoide2 = signal.generateSin(freq2, amp, duration, fs)
 
     senoide = senoide1 + senoide2
 
-    #printe o grafico no tempo do sinal a ser reproduzido
-    signal.plotSin(numero, senoide, fs, duration)
-    signal.plotFFT(senoide, fs)
+    signal.plotSin(x1, numero, senoide)
+
+    xf, yf = signal.calcFFT(senoide, fs)
+    plt.figure("F(y)")
+    plt.plot(xf,yf)
+    plt.grid()
+    plt.title('Fourier audio')
+    plt.show()
+
+    index = peakutils.indexes(yf ,thres = 0.5, min_dist=30)
+    freq_picos = index/duration
+    print("Picos identificados pela Transformada de Fourier: {} Hz e {} Hz".format(freq_picos[0],freq_picos[1]))
 
 
     # reproduz o som

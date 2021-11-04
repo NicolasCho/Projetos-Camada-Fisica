@@ -26,9 +26,9 @@ def encontra_tecla(frequencias, f_dict):
         for j in freq_list:
             if i >= j-5 and i <= j+5:
                 matches.append(j)
-    print(matches)
+    #print(matches)
 
-
+    tecla = 'Erro'
     for numero, dupla_freq in f_dict.items():
         if matches == dupla_freq:
             tecla = numero
@@ -87,7 +87,7 @@ def main():
     index = peakutils.indexes(yf ,thres = 0.1, min_dist=30)
     f_picos = index/duration
     #print(yf[index]/5)
-    
+    print(f_picos)
     #encontre na tabela duas frequencias proximas às frequencias de pico encontradas e descubra qual foi a tecla
     #print a tecla.
     tecla = encontra_tecla(f_picos, freqs)

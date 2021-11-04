@@ -69,6 +69,13 @@ def main():
 
     senoide = senoide1 + senoide2
 
+    # reproduz o som
+    sd.play(senoide, fs)
+    # Exibe gráficos
+    #plt.show()
+    # aguarda fim do audio
+    sd.wait()
+
     signal.plotSin(x1, numero, senoide)
 
     xf, yf = signal.calcFFT(senoide, fs)
@@ -82,13 +89,6 @@ def main():
     freq_picos = index/duration
     print("Picos identificados pela Transformada de Fourier: {} Hz e {} Hz".format(freq_picos[0],freq_picos[1]))
 
-
-    # reproduz o som
-    sd.play(senoide, fs)
-    # Exibe gráficos
-    #plt.show()
-    # aguarda fim do audio
-    sd.wait()
 
 if __name__ == "__main__":
     main()

@@ -27,11 +27,13 @@ class signalMeu:
         yf = fft(signal*W)
         return(xf, np.abs(yf[0:N//2]))
 
-    def plotFFT(self, signal, fs):
+    def plotFFT(self, signal, fs, title):
         x,y = self.calcFFT(signal, fs)
         plt.figure()
         plt.plot(x, np.abs(y))
-        plt.title('Fourier')
+        plt.title(title)
+        plt.xlabel("Frequência")
+        plt.ylabel("Amplitude")
         plt.show()
     
     def plotSin(self,x,tecla, signal):
@@ -41,10 +43,10 @@ class signalMeu:
         plt.ylabel("Amplitude")
         plt.show()
 
-    def plotAudio(self, audio, amostras, time):
+    def plotAudio(self, audio, amostras, time, title):
         x = np.linspace(0.0, time, amostras)
         plt.plot(x, audio)
-        plt.title("Gráfico do áudio captado")
+        plt.title(title)
         plt.xlabel("Tempo")
         plt.ylabel("Amplitude")
         plt.show()

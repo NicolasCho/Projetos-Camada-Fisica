@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Show a text-mode spectrogram using live microphone data."""
+"""Gravador de áudio"""
 
 #Importe todas as bibliotecas
 from suaBibSignal import signalMeu

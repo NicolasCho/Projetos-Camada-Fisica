@@ -1,3 +1,6 @@
+from scipy import signal as sg
+
+
 def filtro(y, samplerate, cutoff_hz):
   # https://scipy.github.io/old-wiki/pages/Cookbook/FIRFilter.html
     nyq_rate = samplerate/2
@@ -9,7 +12,6 @@ def filtro(y, samplerate, cutoff_hz):
     return yFiltrado
 
 def LPF(signal, cutoff_hz, fs):
-        from scipy import signal as sg
         #####################
         # Filtro
         #####################
